@@ -1,0 +1,70 @@
+﻿<Window x:Class="CovidCharts.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:CovidCharts.Properties"
+        xmlns:loadin="clr-namespace:LoadingIndicators.WPF;assembly=LoadingIndicators.WPF"
+        mc:Ignorable="d" WindowStyle="None" WindowStartupLocation="CenterScreen"
+        Title="MainWindow" Height="700" Width="800">
+    <Grid>
+
+        <loadin:LoadingIndicator
+            x:Name="loadingIndicator"
+            Style="{DynamicResource LoadingIndicatorDoubleBounceStyle}"/>
+
+        <Grid x:Name="mainGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <DockPanel 
+                    x:Name="backControlPanel" 
+                    Cursor="Hand"
+                    Visibility="Hidden"
+                    MouseDown="GoBack">
+
+                    <materialDesign:PackIcon
+                        Kind="ArrowLeft"
+                        Height="30" Width="30"
+                        Margin="15"/>
+
+                    <TextBlock Text="{x:Static p:Strings.Back}" FontWeight="SemiBold"
+                           VerticalAlignment="Center"/>
+
+                </DockPanel>
+
+                <ContentControl
+                    Grid.Column="1"
+                    MouseDown="Exit"
+                    Cursor="Hand"
+                    HorizontalAlignment="Right"
+                    Margin="30,0,0,0">
+                    <Grid>
+                        <Rectangle Fill="Transparent"/>
+                        <materialDesign:PackIcon
+                            Kind="Close"
+                            Height="30" Width="30"
+                            Margin="15" />
+                    </Grid>
+                </ContentControl>
+
+            </Grid>
+
+            <materialDesign:Transitioner
+                x:Name="transitioner"
+                Grid.Row="1"
+                ItemsSource="{Binding Slides}"
+                SelectedIndex="{Binding SelectedSlide}">
+            </materialDesign:Transitioner>
+        </Grid>
+    </Grid>
+</Window>
