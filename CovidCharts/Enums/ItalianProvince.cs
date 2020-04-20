@@ -119,7 +119,7 @@ namespace CovidCharts
 
     internal static class Province
     {
-        internal static readonly IEnumerable<ItalianProvince> provinces = Enum.GetValues(typeof(ItalianProvince)).Cast<ItalianProvince>();
+        internal static readonly IEnumerable<ItalianProvince> provinces = Enum.GetValues(typeof(ItalianProvince)).Cast<ItalianProvince>().Where(p => p != ItalianProvince.UNKNOWN);
 
         internal static ItalianProvince FromInt(int i)
         {

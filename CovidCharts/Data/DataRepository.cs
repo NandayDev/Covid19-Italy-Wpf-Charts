@@ -26,20 +26,22 @@ namespace CovidCharts.Data
             while (!sr.EndOfStream)
             {
                 var splits = sr.ReadLine().Split(',');
-                DateTime date = DateTime.Parse(splits[0], CultureInfo.InvariantCulture);
-                int ricoveratiConSintomi = int.Parse(splits[2]);
-                int terapiaIntensiva = int.Parse(splits[3]);
-                int totale_ospedalizzati = int.Parse(splits[4]);
-                int isolamento_domiciliare = int.Parse(splits[5]);
-                int totale_positivi = int.Parse(splits[6]);
-                int variazione_totale_positivi = int.Parse(splits[7]);
-                int nuovi_positivi = int.Parse(splits[8]);
-                int dimessi_guariti = int.Parse(splits[9]);
-                int deceduti = int.Parse(splits[10]);
-                int totale_casi = int.Parse(splits[11]);
-                int tamponi = int.Parse(splits[12]);
-                NationalTrendData.Add(new NationalTrendDailyData(date, ricoveratiConSintomi, terapiaIntensiva, totale_ospedalizzati, isolamento_domiciliare, totale_positivi,
-                    variazione_totale_positivi, nuovi_positivi, dimessi_guariti, deceduti, totale_casi, tamponi));
+                if (DateTime.TryParse(splits[0], CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime date))
+                {
+                    int ricoveratiConSintomi = int.Parse(splits[2]);
+                    int terapiaIntensiva = int.Parse(splits[3]);
+                    int totale_ospedalizzati = int.Parse(splits[4]);
+                    int isolamento_domiciliare = int.Parse(splits[5]);
+                    int totale_positivi = int.Parse(splits[6]);
+                    int variazione_totale_positivi = int.Parse(splits[7]);
+                    int nuovi_positivi = int.Parse(splits[8]);
+                    int dimessi_guariti = int.Parse(splits[9]);
+                    int deceduti = int.Parse(splits[10]);
+                    int totale_casi = int.Parse(splits[11]);
+                    int tamponi = int.Parse(splits[12]);
+                    NationalTrendData.Add(new NationalTrendDailyData(date, ricoveratiConSintomi, terapiaIntensiva, totale_ospedalizzati, isolamento_domiciliare, totale_positivi,
+                        variazione_totale_positivi, nuovi_positivi, dimessi_guariti, deceduti, totale_casi, tamponi));
+                }
             }
 
             var province = await provinceTask;
@@ -48,12 +50,14 @@ namespace CovidCharts.Data
             while (!sr2.EndOfStream)
             {
                 var splits = sr2.ReadLine().Split(',');
-                DateTime date = DateTime.Parse(splits[0], CultureInfo.InvariantCulture);
-                ItalianProvince provincia = Province.FromInt(int.Parse(splits[4]));
-                if (provincia != ItalianProvince.UNKNOWN)
+                if (DateTime.TryParse(splits[0], CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime date))
                 {
-                    int totale_casi = int.Parse(splits[9]);
-                    DatiProvince.Add(new ProvinceDailyData(date, provincia, totale_casi));
+                    ItalianProvince provincia = Province.FromInt(int.Parse(splits[4]));
+                    if (provincia != ItalianProvince.UNKNOWN)
+                    {
+                        int totale_casi = int.Parse(splits[9]);
+                        DatiProvince.Add(new ProvinceDailyData(date, provincia, totale_casi));
+                    }
                 }
             }
         }
