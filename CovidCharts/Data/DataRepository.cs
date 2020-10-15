@@ -37,8 +37,8 @@ namespace CovidCharts.Data
                     int nuovi_positivi = int.Parse(splits[8]);
                     int dimessi_guariti = int.Parse(splits[9]);
                     int deceduti = int.Parse(splits[10]);
-                    int totale_casi = int.Parse(splits[11]);
-                    int tamponi = int.Parse(splits[12]);
+                    int totale_casi = int.Parse(splits[13]);
+                    int tamponi = int.Parse(splits[14]);
                     NationalTrendData.Add(new NationalTrendDailyData(date, ricoveratiConSintomi, terapiaIntensiva, totale_ospedalizzati, isolamento_domiciliare, totale_positivi,
                         variazione_totale_positivi, nuovi_positivi, dimessi_guariti, deceduti, totale_casi, tamponi));
                 }
